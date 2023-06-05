@@ -1,0 +1,38 @@
+body{
+    font-family: 'Roboto Mono', monospace;
+}
+
+.card{
+    margin-top: 20px;
+    border: 1px solid black;
+    width: 270px; 
+    height: 415px;
+    border-radius: 10px;
+    background-color: rgb(16, 31, 21);
+    color: antiquewhite;
+}
+
+.card img{
+    width: 270px;
+    height: 250px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+.card img:hover{
+    transform: scale(1.1);
+}
+.card h3 {
+    font-size: 1.3em;
+    margin-bottom: 0.5em;
+    word-wrap: break-word;
+  }
+  
+  .card p {
+    font-size: 0.8em;
+    margin-bottom: 0.2em;
+    display: inline;
+  }
+  
+  .card p:not(:last-child) {
+    margin-right: 0.5em;
+  }

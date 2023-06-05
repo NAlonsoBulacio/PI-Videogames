@@ -1,0 +1,38 @@
+.searchBar {
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 22, 0, 0.978);
+    color: antiquewhite;
+  }
+  
+  .searchBar label {
+    margin-right: 10px;
+  }
+  
+  .searchBar select,
+  .searchBar input[type="text"] {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .searchBar select {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .searchBar button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .searchBar button:hover {
+    background-color: #0056b3;
+  }

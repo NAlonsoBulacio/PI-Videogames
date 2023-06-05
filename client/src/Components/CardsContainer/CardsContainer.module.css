@@ -1,0 +1,11 @@
+.container{
+  
+    border: 1px solid black;   /* le pone un borde al contenedor */
+    background-color: rgba(7, 16, 7, 0.978);
+    display: flex;     /* hace display flex, es decir en horizontal */
+    flex-direction: row;    /* hace que se ordene en filas de izquierda a derecha */
+    flex-wrap: wrap;      /* hace que se vaya para abajo */
+    gap: 1em;     /* hace que se separen los componentes  */
+    justify-content: center; /* Centra horizontalmente las tarjetas */
+    align-items: center; /* Centra verticalmente las tarjetas */
+}
