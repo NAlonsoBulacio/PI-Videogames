@@ -4,55 +4,97 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import Pagination from "../../Components/Pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, getGenres, filterUsers, filterByCreated, orderUsers } from "../../redux/actions";
-// import { useHistory, useLocation } from "react-router-dom";
+
 
 
 
 const Home = () => {
     const users = useSelector(state => state.users);
     const generos = useSelector(state => state.generos);
-    const allUsers = useSelector(state => state.allUsers);
     const [currentPage, setCurrentPage] = useState(1);
+    const [genreFilter, setGenreFilter] = useState('Todos');
+    const [createdFilter, setCreatedFilter] = useState('Todos');
     const [orden, setOrden] = useState('')
+    const [loading, setLoading] = useState(true);
 
-
-
-    // const history = useHistory();
-    // const location = useLocation();
-    // const queryParams = new URLSearchParams(location.search);
-    // const currentPage = parseInt(queryParams.get("page")) || 1;
     const itemsPerPage = 15;
     const dispatch = useDispatch();
 
     useEffect(() => {
-    dispatch(getUsers(currentPage, itemsPerPage));
+    dispatch(getUsers(() => setLoading(false)));
     dispatch(getGenres());
     }, [dispatch, currentPage, itemsPerPage])
 
     const handleFilterGenre = (e) => {
-      dispatch(filterUsers(e.target.value))
+      const genre = e.target.value;
+      setGenreFilter(genre);
+      dispatch(filterUsers(genre));
+      setCurrentPage(1);
     };
 
     const handleFilterByCreated = (e) => {
-      dispatch(filterByCreated(e.target.value))
+      const created = e.target.value
+      dispatch(filterByCreated("Todos"));
+      setCreatedFilter(created);
+      dispatch(filterByCreated(created));
+      setCurrentPage(1);
     };
 
     const handleSort = (e) => {
       e.preventDefault();
       dispatch(orderUsers(e.target.value))
       setCurrentPage(1)
-      setOrden(`Ordenado ${e.target.value}`)
+      setOrden(e.target.value)
     }
   
 
-    const allVideogames = users.length;
+    const filteredVideogames = users.filter((user) => {
+      const genreMatch = genreFilter === 'Todos' || user.Generos.includes(genreFilter);
+      const createdMatch = createdFilter === 'Todos' || (createdFilter === 'Creados' && user.creadoEnDb) || (createdFilter === 'Api' && !user.creadoEnDb);
+      let sortedArr = []
+      let sortOrder 
+      if(orden === "asc" || orden === "dsc"){
+        sortOrder = orden === "asc" ? 1 : -1;
+        sortedArr = users.sort(function(a, b) {
+         if (a.Nombre > b.Nombre) {
+           return sortOrder;
+         }
+         if (a.Nombre < b.Nombre) {
+           return -sortOrder;
+         }
+         return 0;
+       }); 
+      }
+      if(orden === "ascR" || orden === "dscR"){
+        sortOrder = orden === "ascR" ? 1 : -1;
+        sortedArr = users.sort(function(a, b) {
+         if (a.Rating > b.Rating) {
+           return sortOrder;
+         }
+         if (a.Rating < b.Rating) {
+           return -sortOrder;
+         }
+         return 0;
+       }); 
+      }
+      return genreMatch && createdMatch && sortedArr;
+    });
+  
+    const allVideogames = filteredVideogames.length;
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
+    let currentItems = [];
+    if(genreFilter === 'Todos'){
+    currentItems = filteredVideogames.slice(indexOfFirstItem, indexOfLastItem);
+    }else{ 
+    currentItems = filteredVideogames.filter((user) => user.Generos.includes(genreFilter)
+    ).slice(indexOfFirstItem, indexOfLastItem);
+    };
+
+console.log(allVideogames);
 
     const paginate = (pageNumber) => {
       setCurrentPage(pageNumber);
-    
     };
 
     
@@ -64,13 +106,22 @@ const Home = () => {
           handleFilterByCreated={handleFilterByCreated}
           generos={generos} 
           />
+        {loading ? (
+         <div className="loading">
+          <img src={require("./bart-simpson-video-games.gif").default} alt="Loading" />
+         </div>
+          ) : (
+        <>
           <CardsContainer users={currentItems} />
           <Pagination
+           currentItems={currentItems}
             itemsPerPage={itemsPerPage}
             allVideogames={allVideogames}
             currentPage={currentPage}
             paginate={paginate}
           />
+        </>
+      )}
         </div>
       );
 }

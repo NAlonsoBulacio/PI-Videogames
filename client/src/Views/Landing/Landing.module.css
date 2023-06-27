@@ -10,4 +10,31 @@
     background-repeat: no-repeat;
     background-color: black;
     background-image: url("C:\Users\nicoa\Desktop\henry\PI\PI-Videogames-main\client\src\Views\Landing\videogame.png");
- }
+  }
+  
+  
+  .landing button {
+    font-family: 'Roboto Mono', monospace;
+    margin-top: 30px;
+    background-color: #ff4d00;
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .landing button:hover {
+    background-color: #ff6f2e;
+  }
+  
+  .landing button a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .landing button a:hover {
+    text-decoration: underline;
+  }

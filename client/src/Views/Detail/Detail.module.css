@@ -1,0 +1,80 @@
+.detail {
+  color: antiquewhite;
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.detail h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.detail img {
+  max-width: 600px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.detail ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.detail li {
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  background-color: #555;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.descripcion {
+  margin-top: 35px;
+  color: antiquewhite;
+  font-family:'Roboto Mono', monospace;
+  font-size: 1.5rem; /* Tamaño de fuente más grande */
+  background-color: rgb(7, 16, 7);
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor de tipo puntero */
+}
+
+.descripcion:hover {
+  text-decoration: underline; /* Subrayado al hacer hover */
+}
+
+.linkContainer{
+  background-color: rgba(7, 16, 7, 0.9);
+}
+.detail .link {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.detail .link:hover {
+  color: rgb(116, 108, 108);
+}
+.detail .link::before {
+  content: "•"; /* Puedes cambiar el símbolo aquí */
+  margin-right: 5px; /* Espacio entre el símbolo y el texto del enlace */
+}
+.detail p {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.detail h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-align: center;
+  text-transform: uppercase;
+}

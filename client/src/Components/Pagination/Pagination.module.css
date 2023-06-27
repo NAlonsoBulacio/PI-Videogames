@@ -6,6 +6,11 @@
     background-color: rgba(7, 16, 7, 0.978);
 }
 
+.active {
+  background-color: #ff4d00;
+  color: white;
+}
+
 .pagination button {
     width: 40px;
     height: 40px;

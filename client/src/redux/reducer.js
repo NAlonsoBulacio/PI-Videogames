@@ -1,4 +1,4 @@
-import { GET_USERS,GET_USERS_ID, GET_USERS_BY_NAME, FILTER, GET_GENEROS, FILTER_CREATED, ORDER } from "./actions"
+import { GET_USERS,GET_USERS_ID, GET_USERS_BY_NAME, FILTER, GET_GENEROS, FILTER_CREATED, ORDER, EMPTY } from "./actions"
 
 
 const initialState = {
@@ -24,22 +24,41 @@ const reducer = (state = initialState, action) => {
                   user.Generos.includes(action.payload));
                 return { ...state, users: filteredUsers };
         case FILTER_CREATED:
-            const allusers2 = state.allUsers
+            const users2 = state.allUsers
+            const allusers2 = [...state.users]
             const cretedFiltered = action.payload === "Creados" ? allusers2.filter((user) => user.creadoEnDb) : allusers2.filter((user) => !user.creadoEnDb)
-            return{...state, users: action.payload === "Todos" ? allusers2 : cretedFiltered}
+            return{...state, users: action.payload === "Todos" ? users2 : cretedFiltered}
         case ORDER:
-            const sortOrder = action.payload === "asc" ? 1 : -1;
-            const sortedArr = [...state.users].sort(function(a, b) {
-              if (a.Nombre > b.Nombre) {
-                return sortOrder;
-              }
-              if (a.Nombre < b.Nombre) {
-                return -sortOrder;
-              }
-              return 0;
-            });
-          
+            let sortedArr = []
+            let sortOrder 
+            if(action.payload === "asc" || action.payload === "dsc"){
+              sortOrder = action.payload === "asc" ? 1 : -1;
+              sortedArr = [...state.users].sort(function(a, b) {
+               if (a.Nombre > b.Nombre) {
+                 return sortOrder;
+               }
+               if (a.Nombre < b.Nombre) {
+                 return -sortOrder;
+               }
+               return 0;
+             }); 
+            }
+            if(action.payload === "ascR" || action.payload === "dscR"){
+              sortOrder = action.payload === "ascR" ? 1 : -1;
+              sortedArr = [...state.users].sort(function(a, b) {
+               if (a.Rating > b.Rating) {
+                 return sortOrder;
+               }
+               if (a.Rating < b.Rating) {
+                 return -sortOrder;
+               }
+               return 0;
+             }); 
+            }
+
             return {...state, users: sortedArr};
+            case EMPTY: 
+            return {...state, detail: []};
             default:
             return{...state};
     }

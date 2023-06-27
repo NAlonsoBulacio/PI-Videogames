@@ -5,10 +5,10 @@ const NavBar = () => {
     return(
         <div className={style.mainContainer}>
             <Link to="/home">
-              <button> HOME </button>      
+              <button className={style.button}> HOME </button>      
             </Link>
             <Link to="/create">
-            <button> CREA TU VIDEOJUEGO! </button>    
+            <button className={style.button}> CREA TU VIDEOJUEGO! </button>    
             </Link>
         </div>
     )

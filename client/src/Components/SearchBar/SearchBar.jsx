@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getUsersByName } from "../../redux/actions";
+import { getUsersByName, getUsers } from "../../redux/actions";
 import style from "./SearchBar.module.css"
 
 const SearchBar = ({ generos, handleFilterGenre, handleFilterByCreated, handleSort }) => {
@@ -10,7 +10,6 @@ const SearchBar = ({ generos, handleFilterGenre, handleFilterByCreated, handleSo
     const dispatch = useDispatch();
 
     const changeHandler = (event) => {
-
         const value = event.target.value;
         setNombre(value)
         }
@@ -22,9 +21,13 @@ const SearchBar = ({ generos, handleFilterGenre, handleFilterByCreated, handleSo
         setNombre('');
        };
 
+    const handleCarga = () => {
+        dispatch(getUsers());
+    }
 
     return(
         <div className={style.searchBar}>
+            <button onClick={handleCarga}>Cargar Videojuegos</button>
             <label> Filtrar Videojuegos</label> 
             <select onChange={(e) => handleFilterByCreated(e)}>
                 <option value="Todos">Todos</option>
@@ -47,6 +50,8 @@ const SearchBar = ({ generos, handleFilterGenre, handleFilterByCreated, handleSo
             <option disabled selected value=""> ordenar </option>
                 <option value="asc">Nombre Ascendente</option>
                 <option value="dsc">Nombre Descendente</option>
+                <option value="ascR">Rating Ascendente</option>
+                <option value="dscR">Rating Descendente</option>
             </select>  
         </div>
     );

@@ -1,7 +1,7 @@
-const { Videogame } = require('../db');
+const { Videogame, Genres } = require('../db');
 const { createVideogame } = require('../controllers/createVideogame')
 const { getVideogameById, getVideogames } = require('../controllers/getVideogameController')
-
+const { Op } = require('sequelize');
 
 const getVideogamesHandler = async(req, res) => {
     const { Nombre } = req.query
@@ -43,8 +43,18 @@ const getVideogamesHandler = async(req, res) => {
     const createVideogameHandler = async (req, res) => {
       try {
         const { Nombre, Descripción, Plataformas, Imagen, Fecha_de_lanzamiento, Rating, Generos } = req.body;
-        await createVideogame(Nombre, Descripción, Plataformas, Imagen, Fecha_de_lanzamiento, Rating, Generos);
-        res.status(201).json({ message: 'Videojuego creado exitosamente' });
+        const videogameCreado = await createVideogame(Nombre, Descripción, Plataformas, Imagen, Fecha_de_lanzamiento, Rating, Generos);
+        const genresDB= await Genres.findAll({
+          where:{
+              Nombre:{
+                  [Op.in]: Generos
+              }
+          }
+      })
+      await videogameCreado.addGenres(genresDB)
+      const genres = await videogameCreado.getGenres();
+      console.log(genres);
+        res.status(201).json({ message: 'Videojuego creado exitosamente', videogameCreado: videogameCreado});
       } catch (error) {
         res.status(400).json({ error: error.message });
       }

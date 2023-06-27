@@ -5,9 +5,8 @@ const Landing = () => {
 
     return(
         <div className={style.landing}>
-        <h1>este es el Landing</h1>
         <button> 
-          <Link to='/home'> Home </Link>
+          <Link to='/home'> Bienvenido a mi Aplicacion sobre Videojuegos! </Link>
         </button>
         </div>
     )

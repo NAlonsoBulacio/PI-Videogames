@@ -11,6 +11,7 @@ const getVideogameById = async(id, source) => {
       Nombre: response.name,
       Imagen: response.background_image,
       Fecha_de_lanzamiento: response.released,
+      Descripción: response.description_raw,
       Rating: response.rating,
       Plataformas: response.platforms.map((plataforma) => plataforma.platform.name),
       Generos: response.genres.map((genre) => genre.name)
@@ -26,10 +27,12 @@ else {
 const getVideogames = async (Nombre) => {
   try {
     const bddVideojuegos =  await Videogame.findAll();
-    const apiurls = Array.from(
-      { length: 5},
-      (_, i) => `https://api.rawg.io/api/games?key=a7dbfb5fbdb94750a31f7a5935c10667&page=${i + 1}`
-    );
+    const apiurls = [];
+
+    for (let i = 0; i < 5; i++) {
+      const url = `https://api.rawg.io/api/games?key=a7dbfb5fbdb94750a31f7a5935c10667&page=${i + 1}`;
+      apiurls.push(url);
+    }
 
     let responses = await axios.all(apiurls.map((url) => axios.get(url)));
   
@@ -61,12 +64,6 @@ const getVideogames = async (Nombre) => {
     throw new Error('Hubo un problema al obtener los videojuegos.');
   }
 };
-
-    // const apiResponse = await axios.get('https://api.rawg.io/api/games?key=a7dbfb5fbdb94750a31f7a5935c10667');
-    // const apiVideojuegos = apiResponse.data.results;
-
-
-
 
 module.exports = {
   getVideogameById, 
