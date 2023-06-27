@@ -11,7 +11,7 @@ export const EMPTY = "EMPTY";
 export const getUsers = (setLoading) => {
 return async function(dispatch){
     try{
-    const backData = await axios.get('http://localhost:3001/videogames');
+    const backData = await axios.get('/videogames');
     const users = backData.data;
     dispatch({type: GET_USERS, payload: users});
     setLoading(false);
@@ -21,7 +21,7 @@ return async function(dispatch){
 };
 export const getUsersId = (id) => {
 return async function(dispatch){
-    const backData = await axios.get(`http://localhost:3001/videogames/${id}`);
+    const backData = await axios.get(`/videogames/${id}`);
     const users = backData.data;
     dispatch({type: GET_USERS_ID, payload: users});
 }
@@ -29,7 +29,7 @@ return async function(dispatch){
 
 export const getGenres = () => {
     return async function(dispatch){
-        const backData = await axios.get('http://localhost:3001/genres');
+        const backData = await axios.get('/genres');
         const generos = backData.data;
         dispatch({type: GET_GENEROS, payload: generos})
     }
@@ -37,7 +37,7 @@ export const getGenres = () => {
 
 export const getUsersByName = (nombre) => {
     return async function(dispatch){
-        const dataUsers = await axios.get(`http://localhost:3001/videogames?Nombre=${nombre}`);
+        const dataUsers = await axios.get(`/videogames?Nombre=${nombre}`);
         const users = dataUsers.data;
         dispatch({type: GET_USERS_BY_NAME, payload: users});
     }
