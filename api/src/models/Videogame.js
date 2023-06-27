@@ -20,6 +20,37 @@ module.exports = (sequelize) => {
     Plataformas: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+      defaultValue: [],
+      get() {
+        const platforms = this.getDataValue('Plataformas');
+        return platforms ? platforms : [];
+      },
+      set(value) {
+        if (Array.isArray(value)) {
+          this.setDataValue('Plataformas', value);
+        } else {
+          this.setDataValue('Plataformas', []);
+        }
+      },
+      field: 'Plataformas',
+      // Añade esta opción para especificar la transformación de tipo
+      // adaptada a la base de datos PostgreSQL.
+      // Puede ser necesario ajustarla según las necesidades de tu base de datos.
+      // Si utilizas otro motor de base de datos, es posible que debas ajustar esta opción.
+      set: function (value) {
+        if (Array.isArray(value)) {
+          this.setDataValue('Plataformas', value.join(','));
+        } else {
+          this.setDataValue('Plataformas', value);
+        }
+      },
+      get: function () {
+        const value = this.getDataValue('Plataformas');
+        if (typeof value === 'string') {
+          return value.split(',');
+        }
+        return value;
+      },
     },
     Imagen: {
       type: DataTypes.TEXT,
