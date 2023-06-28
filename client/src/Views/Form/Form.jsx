@@ -100,7 +100,7 @@ const Form = () => {
     const submitHandler = (event) => {
     event.preventDefault();
     console.log(event.preventDefault);
-    axios.post("http://localhost:3001/videogames", form)
+    axios.post("/videogames", form)
     .then(res => {
       const { id } = res.data.videogameCreado;
       alert(`Videojuego creado con exito`);
