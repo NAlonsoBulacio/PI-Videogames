@@ -1,10 +1,14 @@
 const { Videogame } = require('../db')
 const axios = require("axios");
+require('dotenv').config();
+const {
+    API_KEY
+  } = process.env;
 
 const getVideogameById = async(id, source) => {
   let videogame;
   if(source === 'api'){
-    let response = (await axios.get(`https://api.rawg.io/api/games/${id}?key=a7dbfb5fbdb94750a31f7a5935c10667`)).data
+    let response = (await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)).data
 
     videogame = {
       id: response.id,
